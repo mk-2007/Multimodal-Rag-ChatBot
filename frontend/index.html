@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask the paper — Attention Is All You Need</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="stage">
+    <header class="masthead">
+      <p class="eyebrow">Attention Is All You Need &middot; Vaswani et al., 2017</p>
+      <h1 class="title">Ask the paper</h1>
+      <p class="subtitle">Type a question, or drop in a diagram to see what it matches.</p>
+    </header>
+
+    <section class="input-capsule" id="input-capsule">
+      <div class="image-chip" id="image-chip" hidden>
+        <img id="image-preview" alt="Attached image preview">
+        <button class="chip-remove" id="image-remove" aria-label="Remove attached image" type="button">&times;</button>
+      </div>
+
+      <textarea
+        id="query-text"
+        class="query-input"
+        placeholder="Ask something about the paper, or drop an image"
+        rows="1"
+      ></textarea>
+
+      <div class="capsule-controls">
+        <button class="icon-btn" id="attach-btn" type="button" aria-label="Attach an image" title="Attach an image">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5a2 2 0 0 0-2.83 0L7 16"/><path d="M17 3h5v5"/><path d="M22 3l-9 9"/></svg>
+        </button>
+        <input type="file" id="image-input" accept="image/png,image/jpeg" hidden>
+        <button class="ask-btn" id="ask-btn" type="button">
+          <span class="ask-label">Ask</span>
+          <span class="ask-spinner" hidden></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="answer-zone" id="answer-zone" aria-live="polite">
+      <p class="answer-empty" id="answer-empty">
+        Try: <button class="suggestion" data-q="What BLEU score did the Transformer (big) model achieve on English-to-German?">a BLEU score from Table 2</button>,
+        <button class="suggestion" data-q="Describe the encoder-decoder architecture shown in the diagram.">the architecture diagram</button>, or
+        <button class="suggestion" data-q="What is multi-head attention and why is it used?">multi-head attention</button>.
+      </p>
+    </section>
+  </main>
+
+  <!-- Sources drawer: the "side pop-up" panel for retrieved chunks/metadata -->
+  <button class="drawer-tab" id="drawer-tab" aria-expanded="false" aria-controls="drawer">
+    <span class="drawer-tab-label">Sources</span>
+    <span class="drawer-tab-count" id="drawer-tab-count">0</span>
+  </button>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h2>Sources</h2>
+      <button class="drawer-close" id="drawer-close" aria-label="Close sources panel" type="button">&times;</button>
+    </div>
+    <p class="drawer-hint">Retrieved from the shared vector store, ranked by relevance to your question.</p>
+    <div class="drawer-list" id="drawer-list"></div>
+  </aside>
+
+  <div class="beam-layer" id="beam-layer" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

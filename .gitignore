@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Generated artifacts
+store/
+output/
+
+# Generated extracted data
+images/*.png
+data/*.json

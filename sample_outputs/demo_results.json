@@ -1,0 +1,155 @@
+[
+  {
+    "query": "What BLEU score did the Transformer (big) model achieve on the WMT 2014 English-to-German translation task, and how does it compare to GNMT + RL?",
+    "retrieved_context": [
+      {
+        "score": 0.8026993870735168,
+        "modality": "text",
+        "source_ref": "page 8 body text",
+        "page": 8,
+        "heading_context": "6 Results",
+        "content": "[Section: 6 Results] 6.1 Machine Translation On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big) in Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this model is listed in the bottom line of Table 3. Training took 3.5 days on 8 P100 GPUs. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models. On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0, outperforming all of the previously published single models, at less than 1/4 the training cost of the previous state-of-the-art model. The Transformer (big) model trained for English-to-French used dropout rate Pdrop = 0.1, instead of 0.3. For the base models, we used a single model obtained by averaging the last 5 checkpoints, which were written at 10-minute intervals. For the big models, we averaged the last 20 checkpoints. We used beam search with a beam size of 4 and length penalty \u03b1 = 0.6 [38].",
+        "image_path": ""
+      },
+      {
+        "score": 0.7848524451255798,
+        "modality": "text",
+        "source_ref": "page 7 body text",
+        "page": 7,
+        "heading_context": "5 Training",
+        "content": "[Section: 5 Training] LEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost. Model BLEU Training Cost (FLOPs) EN-DE EN-FR EN-DE EN-FR ByteNet [18] 23.75 Deep-Att + PosUnk [39] 39.2 1.0 \u00b7 1020 GNMT + RL [38] 24.6 39.92 2.3 \u00b7 1019 1.4 \u00b7 1020 ConvS2S [9] 25.16 40.46 9.6 \u00b7 1018 1.5 \u00b7 1020 MoE [32] 26.03 40.56 2.0 \u00b7 1019 1.2 \u00b7 1020 Deep-Att + PosUnk Ensemble [39] 40.4 8.0 \u00b7 1020 GNMT + RL Ensemble [38] 26.30 41.16 1.8 \u00b7 1020 1.1 \u00b7 1021 ConvS2S Ensemble [9] 26.36 41.29 7.7 \u00b7 1019 1.2 \u00b7 1021 Transformer (base model) 27.3 38.1 3.3 \u00b7 1018 Transformer (big) 28.4 41.8 2.3 \u00b7 1019 Residual Dropout We apply dropout [33] to the output of each sub-layer, before it is added to the sub-layer input and normalized. In addition, we apply dropout to the sums of the embeddings and the positional encodings in both the encoder and decoder stacks. For the base model, we use a rate of Pdrop = 0.1. Label Smoothing During training, we employed label smoothing of value \u03f5ls = 0.1 [36]. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7768725752830505,
+        "modality": "table",
+        "source_ref": "table_2",
+        "page": 8,
+        "heading_context": "Table 2 (see rendered page image table_2_page8.png)",
+        "content": "[Table 2 (see rendered page image table_2_page8.png)]\n| Model | BLEU (EN-DE) | BLEU (EN-FR) | Training Cost (FLOPs) (EN-DE) | Training Cost (FLOPs) (EN-FR) |\n| :--- | :---: | :---: | :---: | :---: |\n| ByteNet [18] | 23.75 | | | |\n| Deep-Att + PosUnk [39] | | 39.2 | | 1.0 \u00b7 10<sup>20</sup> |\n| GNMT + RL [38] | 24.6 | 39.92 | 2.3 \u00b7 10<sup>19</sup> | 1.4 \u00b7 10<sup>20</sup> |\n| ConvS2S [9] | 25.16 | 40.46 | 9.6 \u00b7 10<sup>18</sup> | 1.5 \u00b7 10<sup>20</sup> |\n| MoE [32] | 26.03 | 40.56 | 2.0 \u00b7 10<sup>19</sup> | 1.2 \u00b7 10<sup>20</sup> |\n| Deep-Att + PosUnk Ensemble [39] | | 40.4 | | 8.0 \u00b7 10<sup>20</sup> |\n| GNMT + RL Ensemble [38] | 26.30 | 41.16 | 1.8 \u00b7 10<sup>20</sup> | 1.1 \u00b7 10<sup>21</sup> |\n| ConvS2S Ensemble [9] | 26.36 | 41.29 | 7.7 \u00b7 10<sup>19</sup> | 1.2 \u00b7 10<sup>21</sup> |\n| Transformer (base model) | 27.3 | 38.1 | **3.3 \u00b7 10<sup>18</sup>** | |\n| Transformer (big) | **28.4** | **41.8** | 2.3 \u00b7 10<sup>19</sup> | |\nNotes: This table compares the translation performance (measured in BLEU score) and the training cost (estimated in floating-point operations, or FLOPs) of the Transformer (base and big models) against previous state-of-the-art models on English-to-German (EN-DE) and English-to-French (EN-FR) benchmarks. Bolded numbers denote the best results in each category, showing that the Transformer (big) achieves state-of-the-art BLEU scores while requiring a fraction of the computational training costs of other ensemble and single-model architectures.",
+        "image_path": "E:\\My code\\Python\\Ai season tasks\\multimodal_rag\\images\\table_2_page8.png"
+      },
+      {
+        "score": 0.7372603416442871,
+        "modality": "text",
+        "source_ref": "page 8 body text",
+        "page": 8,
+        "heading_context": "6 Results",
+        "content": "[Section: 6 Results] -minute intervals. For the big models, we averaged the last 20 checkpoints. We used beam search with a beam size of 4 and length penalty \u03b1 = 0.6 [38]. These hyperparameters were chosen after experimentation on the development set. We set the maximum output length during inference to input length + 50, but terminate early when possible [38]. Table 2 summarizes our results and compares our translation quality and training costs to other model architectures from the literature. We estimate the number of floating point operations used to train a model by multiplying the training time, the number of GPUs used, and an estimate of the sustained single-precision floating-point capacity of each GPU 5. 6.2 Model Variations To evaluate the importance of different components of the Transformer, we varied our base model in different ways, measuring the change in performance on English-to-German translation on the 5We used values of 2.8, 3.7, 6.0 and 9.5 TFLOPS for K80, K40, M40 and P100, respectively. Table 3: Variations on the Transformer architecture. Unlisted values are identical to those of the base model. All metrics are on the English-to-German translation development set, newstest2013.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7338573932647705,
+        "modality": "text",
+        "source_ref": "page 7 body text",
+        "page": 7,
+        "heading_context": "5 Training",
+        "content": "[Section: 5 Training] econds. The big models were trained for 300,000 steps (3.5 days). 5.3 Optimizer We used the Adam optimizer [20] with \u03b21 = 0.9, \u03b22 = 0.98 and \u03f5 = 10\u22129. We varied the learning rate over the course of training, according to the formula: lrate = d\u22120.5 model \u00b7 min(step_num\u22120.5, step_num \u00b7 warmup_steps\u22121.5) (3) This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally to the inverse square root of the step number. We used warmup_steps = 4000. 5.4 Regularization We employ three types of regularization during training: Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost.",
+        "image_path": ""
+      }
+    ],
+    "answer": "On the WMT 2014 English-to-German translation task, the **Transformer (big)** model achieved a BLEU score of **28.4**.\n\n### Comparison to GNMT + RL:\n* **GNMT + RL (single model):** The Transformer (big) model outperforms the GNMT + RL single model, which achieved a BLEU score of **24.6** (an improvement of 3.8 BLEU points).\n* **GNMT + RL Ensemble:** The Transformer (big) model also outperforms the GNMT + RL Ensemble, which achieved a BLEU score of **26.30** (an improvement of 2.1 BLEU points). \n\n*(Source: Context 1, Context 2, and Table 2)*"
+  },
+  {
+    "query": "Describe the overall encoder-decoder architecture of the Transformer as shown in the model diagram -- what are the main blocks and how do they connect?",
+    "retrieved_context": [
+      {
+        "score": 0.7838850021362305,
+        "modality": "figure",
+        "source_ref": "figure_1",
+        "page": 3,
+        "heading_context": "Figure 1: The Transformer - model architecture.",
+        "content": "[Figure 1: The Transformer - model architecture.]\nThis figure illustrates the complete Transformer model architecture, which consists of an encoder stack on the left and a decoder stack on the right. \n\nOn the encoder side, the process begins at the bottom with \"Inputs,\" which pass through an \"Input Embedding\" block. A \"Positional Encoding\" representation, depicted as a wave symbol inside a circle, is added to the embedding. This combined representation enters the encoder stack, outlined by a grey box with an \"$N\\times$\" label on its left, indicating that the entire block repeats $N$ times. Within this block, the signal branches: one path splits into three inputs entering a \"Multi-Head Attention\" block, while a residual connection bypasses it. Both paths merge at an \"Add & Norm\" layer. The output then enters a \"Feed Forward\" block and merges with another residual bypass at a second \"Add & Norm\" layer.\n\nOn the decoder side, \"Outputs (shifted right)\" pass through an \"Output Embedding\" and are added to a \"Positional Encoding\" before entering the decoder stack, which is also labeled with \"$N\\times$\" on its right. Within this stack, the signal first goes through a \"Masked Multi-Head Attention\" block and an \"Add & Norm\" layer. Next, it enters a second \"Multi-Head Attention\" block, which receives two of its inputs directly from the final output of the encoder stack and its third input from the decoder's preceding \"Add & Norm\" layer. This is followed by another \"Add & Norm\" layer, a \"Feed Forward\" block, and a final \"Add & Norm\" layer. \n\nAt the very top, the final output of the decoder stack passes through a \"Linear\" layer and a \"Softmax\" layer to produce \"Output Probabilities.\" The figure represents how the model processes sequential data using self-attention and residual connections without recurrence.",
+        "image_path": "E:\\My code\\Python\\Ai season tasks\\multimodal_rag\\images\\figure_1_page3.png"
+      },
+      {
+        "score": 0.7726656198501587,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] Most competitive neural sequence transduction models have an encoder-decoder structure [5, 2, 35]. Here, the encoder maps an input sequence of symbol representations (x1, ..., xn) to a sequence of continuous representations z = (z1, ..., zn). Given z, the decoder then generates an output sequence (y1, ..., ym) of symbols one element at a time. At each step the model is auto-regressive [10], consuming the previously generated symbols as additional input when generating the next. Figure 1: The Transformer - model architecture. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively. 3.1 Encoder and Decoder Stacks Encoder: The encoder is composed of a stack of N = 6 identical layers. Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, position- wise fully connected feed-forward network. We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1].",
+        "image_path": ""
+      },
+      {
+        "score": 0.7432101964950562,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] ise fully connected feed-forward network. We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]. That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself. To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension dmodel = 512. Decoder: The decoder is also composed of a stack of N = 6 identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization. We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7374767661094666,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] mics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38, 2, 9]. \u2022 The encoder contains self-attention layers. In a self-attention layer all of the keys, values and queries come from the same place, in this case, the output of the previous layer in the encoder. Each position in the encoder can attend to all positions in the previous layer of the encoder. \u2022 Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position. We need to prevent leftward information flow in the decoder to preserve the auto-regressive property. We implement this inside of scaled dot-product attention by masking out (setting to \u2212\u221e) all values in the input of the softmax which correspond to illegal connections. See Figure 2. 3.3 Position-wise Feed-Forward Networks In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically. This consists of two linear transformations with a ReLU activation in between.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7282371520996094,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] o jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this. MultiHead(Q, K, V ) = Concat(head1, ..., headh)W O where headi = Attention(QW Q i , KW K i , V W V i ) Where the projections are parameter matrices W Q i \u2208Rdmodel\u00d7dk, W K i \u2208Rdmodel\u00d7dk, W V i \u2208Rdmodel\u00d7dv and W O \u2208Rhdv\u00d7dmodel. In this work we employ h = 8 parallel attention layers, or heads. For each of these we use dk = dv = dmodel/h = 64. Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality. 3.2.3 Applications of Attention in our Model The Transformer uses multi-head attention in three different ways: \u2022 In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder. This allows every position in the decoder to attend over all positions in the input sequence. This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38, 2, 9]. \u2022 The encoder contains self-attention layers.",
+        "image_path": ""
+      }
+    ],
+    "answer": "Based on the model diagram in **Figure 1** (supported by the text in Section 3), the Transformer architecture consists of an **encoder stack** on the left and a **decoder stack** on the right, connected via an attention mechanism, and culminating in an output stage. \n\nHere is how the main blocks are structured and connected:\n\n### 1. The Encoder Stack (Left)\n* **Input and Embedding:** The process begins with **Inputs**, which pass through an **Input Embedding** block. A **Positional Encoding** (represented by a wave symbol) is added to this embedding.\n* **Encoder Layers ($N\\times$ repetitions):** This combined signal enters a stack that repeats $N$ times (where $N = 6$). Each layer contains:\n  * **Multi-Head Attention:** The signal branches, with one path splitting into three inputs entering the \"Multi-Head Attention\" block, and a residual connection bypassing it. Both paths merge at an **Add & Norm** layer.\n  * **Feed Forward:** The output then splits again: one path enters a position-wise **Feed Forward** block, and a residual connection bypasses it. Both paths merge at a second **Add & Norm** layer.\n* The final output of the encoder stack is sent directly to the decoder stack.\n\n### 2. The Decoder Stack (Right)\n* **Output and Embedding:** The target sequence, **Outputs (shifted right)**, passes through an **Output Embedding** block and has a **Positional Encoding** added to it.\n* **Decoder Layers ($N\\times$ repetitions):** This signal enters a stack that also repeats $N$ times (where $N = 6$). Each layer consists of three sub-layers:\n  * **Masked Multi-Head Attention:** To prevent positions from attending to subsequent positions, the signal first passes through a \"Masked Multi-Head Attention\" block and an **Add & Norm** layer (utilizing a residual bypass).\n  * **Encoder-Decoder Multi-Head Attention:** The signal then enters a second \"Multi-Head Attention\" block. This block acts as the connection point between the encoder and decoder: it receives **two inputs** (keys and values) directly from the final output of the encoder stack, and its **third input** (queries) from the decoder's preceding \"Add & Norm\" layer. This is followed by another **Add & Norm** layer with a residual connection.\n  * **Feed Forward:** The signal then passes through a **Feed Forward** block, paired with a final residual bypass and an **Add & Norm** layer.\n\n### 3. The Output Stage\n* At the very top, the final output of the decoder stack passes through a **Linear** layer followed by a **Softmax** layer to generate the final **Output Probabilities**."
+  },
+  {
+    "query": "What is multi-head attention and why is it used instead of a single attention function?",
+    "retrieved_context": [
+      {
+        "score": 0.7447555065155029,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] o jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this. MultiHead(Q, K, V ) = Concat(head1, ..., headh)W O where headi = Attention(QW Q i , KW K i , V W V i ) Where the projections are parameter matrices W Q i \u2208Rdmodel\u00d7dk, W K i \u2208Rdmodel\u00d7dk, W V i \u2208Rdmodel\u00d7dv and W O \u2208Rhdv\u00d7dmodel. In this work we employ h = 8 parallel attention layers, or heads. For each of these we use dk = dv = dmodel/h = 64. Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality. 3.2.3 Applications of Attention in our Model The Transformer uses multi-head attention in three different ways: \u2022 In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder. This allows every position in the decoder to attend over all positions in the input sequence. This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as [38, 2, 9]. \u2022 The encoder contains self-attention layers.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7404726147651672,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] for large values of dk, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients 4. To counteract this effect, we scale the dot products by 1 \u221adk . 3.2.2 Multi-Head Attention Instead of performing a single attention function with dmodel-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to dk, dk and dv dimensions, respectively. On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding dv-dimensional 4To illustrate why the dot products get large, assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q \u00b7 k = Pdk i=1 qiki, has mean 0 and variance dk. output values. These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2. Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+        "image_path": ""
+      },
+      {
+        "score": 0.7154586911201477,
+        "modality": "figure",
+        "source_ref": "figure_3",
+        "page": 4,
+        "heading_context": "Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Attention consists of several",
+        "content": "[Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Attention consists of several]\nThis figure illustrates the Multi-Head Attention mechanism from the Transformer architecture, showing how input vectors are processed in parallel across multiple attention heads.\n\nAt the bottom of the diagram, three distinct inputs are labeled as V (Value), K (Key), and Q (Query). Each of these inputs flows upward through its own dedicated stack of overlapping, light-grey rounded rectangles labeled \"Linear\". This stacking indicates that multiple linear projections are applied in parallel. From these linear layers, arrows point upward into a series of stacked, light-purple rounded rectangles labeled \"Scaled Dot-Product Attention\". A bracket on the right-hand side of these stacked blocks is labeled with the letter \"h\", indicating that this attention mechanism is divided into h parallel heads.\n\nThe outputs from these individual attention heads, shown as multiple upward-pointing arrows, feed directly into a single yellow rounded rectangle labeled \"Concat\" (representing concatenation). The concatenated output then passes through one final light-grey rounded rectangle labeled \"Linear\" at the very top, before exiting the diagram as a single upward arrow.\n\nThe key takeaway of this figure is to visually explain the structure of Multi-Head Attention. It shows how a single set of queries, keys, and values is projected into multiple subspaces, processed independently via scaled dot-product attention, and finally reunited and projected back to the original dimensionality.",
+        "image_path": "E:\\My code\\Python\\Ai season tasks\\multimodal_rag\\images\\figure_3_page4.png"
+      },
+      {
+        "score": 0.6967347264289856,
+        "modality": "text",
+        "source_ref": "page 2 body text",
+        "page": 2,
+        "heading_context": "3 Model Architecture",
+        "content": "[Section: 3 Model Architecture] tput embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than i. 3.2 Attention An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum Scaled Dot-Product Attention Multi-Head Attention Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Attention consists of several attention layers running in parallel. of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key. 3.2.1 Scaled Dot-Product Attention We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2). The input consists of queries and keys of dimension dk, and values of dimension dv. We compute the dot products of the query with all keys, divide each by \u221adk, and apply a softmax function to obtain the weights on the values. In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q.",
+        "image_path": ""
+      },
+      {
+        "score": 0.6937688589096069,
+        "modality": "text",
+        "source_ref": "page 6 body text",
+        "page": 6,
+        "heading_context": "4 Why Self-Attention",
+        "content": "[Section: 4 Why Self-Attention] -attention could yield more interpretable models. We inspect attention distributions from our models and present and discuss examples in the appendix. Not only do individual attention heads clearly learn to perform different tasks, many appear to exhibit behavior related to the syntactic and semantic structure of the sentences.",
+        "image_path": ""
+      }
+    ],
+    "answer": "Based on the provided context, **multi-head attention** is an attention mechanism where, instead of performing a single attention function with $d_{\\text{model}}$-dimensional queries, keys, and values, the model:\n1. Linearly projects the queries, keys, and values $h$ times using different, learned linear projections to $d_k$, $d_k$, and $d_v$ dimensions, respectively (Context 2).\n2. Performs the attention function in parallel across these projected versions (yielding $d_v$-dimensional outputs) (Context 2).\n3. Concatenates these outputs and projects them once more to produce the final values (Context 2, Figure 2).\n\n**Why it is used instead of a single attention function:**\nIt is used because it allows the model to **jointly attend to information from different representation subspaces at different positions** (Context 1, Context 2). If a single attention head were used instead, averaging would inhibit this capability (Context 1, Context 2)."
+  }
+]
