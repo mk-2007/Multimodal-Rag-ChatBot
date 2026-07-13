@@ -115,7 +115,7 @@ python3 generate.py     # demo single Q&A
 ## Notes / limitations
 
 - `gemini-embedding-001` is used for embeddings (`output_dimensionality=768`),
-  and `gemini-2.5-flash` for both vision description and grounded generation
+  and `gemini-3.1-flash-lite` for both vision description and grounded generation
   — change these in `config.py` if you want a different model tier.
 - The vector store is a simple in-memory numpy matrix with cosine similarity
   (fine at this paper's scale — a few dozen chunks). Swap in a real vector DB
