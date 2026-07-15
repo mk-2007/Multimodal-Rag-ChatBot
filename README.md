@@ -250,6 +250,3 @@ One per modality, so you can see the retrieval actually switching context types:
 **Mahandar** — BSCS student, FAST-NUCES Karachi
 [GitHub @mk-2007](https://github.com/mk-2007) · [Codeforces @_gazzy284](https://codeforces.com/profile/_gazzy284)
 
-## 📄 License
-
-No license specified yet — add one (MIT is a common default for student/portfolio projects) if you want others to reuse this freely.
