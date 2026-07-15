@@ -22,14 +22,10 @@ const els = {
   beamLayer: document.getElementById("beam-layer"),
 };
 
-const MODALITY_COLOR = {
-  text: "var(--mod-text)",
-  table: "var(--mod-table)",
-  figure: "var(--mod-figure)",
-};
 // Resolved hex values for SVG stroke (CSS vars don't resolve inside dynamically
-// injected SVG the same way, so keep a plain lookup too)
-const MODALITY_HEX = { text: "#9fc8e8", table: "#a8d8b9", figure: "#f0b27a" };
+// injected SVG the same way, so keep a plain lookup too) -- must match the
+// --mod-text / --mod-table / --mod-figure values in style.css
+const MODALITY_HEX = { text: "#9fc8e8", table: "#8fd6ae", figure: "#ff8552" };
 
 let attachedFile = null;
 
@@ -70,6 +66,37 @@ document.querySelectorAll(".suggestion").forEach((btn) => {
     handleAsk();
   });
 });
+
+/* ---------- text formatting: math notation + light markdown ---------- */
+// Converts the underscore/caret convention we ask Gemini for (d_model, x^2, W_i^Q)
+// into real <sub>/<sup> HTML, plus minimal **bold**/`code`/paragraph handling.
+// Input is escaped first, so this is safe to drop in via innerHTML.
+function formatAnswerText(raw) {
+  let html = escapeHtml(raw);
+
+  // Superscript first isn't safe if a token has both _ and ^ (e.g. W_i^Q) --
+  // process subscript, then superscript, so nested tokens resolve left-to-right.
+  html = html.replace(
+    /([A-Za-z][A-Za-z0-9]*)_(\{([^{}]+)\}|([A-Za-z0-9]+))/g,
+    (_, base, __, braced, plain) => `${base}<sub>${braced || plain}</sub>`
+  );
+  html = html.replace(
+    /([A-Za-z0-9][A-Za-z0-9<>\/]*)\^(\{([^{}]+)\}|(-?[A-Za-z0-9]+))/g,
+    (_, base, __, braced, plain) => `${base}<sup>${braced || plain}</sup>`
+  );
+
+  // Minimal markdown: **bold**, `code`
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+  // Paragraphs on blank lines, single newlines become <br>
+  html = html
+    .split(/\n\s*\n/)
+    .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+
+  return html;
+}
 
 /* ---------- ask flow ---------- */
 els.askBtn.addEventListener("click", handleAsk);
@@ -141,9 +168,9 @@ function renderAnswer(askedText, answerText, opts = {}) {
     asked.textContent = askedText;
   }
 
-  const body = document.createElement("p");
+  const body = document.createElement("div");
   body.className = "body";
-  body.textContent = answerText;
+  body.innerHTML = formatAnswerText(answerText);
 
   card.appendChild(asked);
   card.appendChild(body);
@@ -192,8 +219,8 @@ function renderSources(sources) {
       img.alt = s.heading_context || s.source_ref;
       content.appendChild(img);
     }
-    const contentText = document.createElement("p");
-    contentText.textContent = s.content;
+    const contentText = document.createElement("div");
+    contentText.innerHTML = formatAnswerText(s.content);
     content.appendChild(contentText);
 
     card.appendChild(head);

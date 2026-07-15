@@ -1,31 +1,33 @@
 /* ---------------------------------------------------------------------
-   Design tokens
-   Palette derived directly from the paper's own Figure 1 diagram legend:
-   peach/orange = Multi-Head Attention blocks, mint = Softmax/output,
-   pale blue = Feed Forward. Reused here as functional modality colors
-   (figure / table / text) rather than invented arbitrarily.
+   Design tokens — "blueprint" direction.
+   The paper's own Figure 1 is literally a labeled architecture diagram —
+   a blueprint of a neural network. This leans into that directly: a
+   drafting-table blue canvas with a faint graph-paper grid, sharp
+   corners instead of rounded pills, and a spec-sheet input line instead
+   of a generic floating chat capsule. Modality colors are still pulled
+   from Figure 1's own block palette, now used as annotation-layer colors
+   on top of the blueprint (the way drafters color-code revision layers).
    ------------------------------------------------------------------- */
 :root {
-  --ink: #12141c;
-  --ink-raised: #191c27;
-  --ink-line: #262a38;
-  --text: #ededf2;
-  --text-muted: #8b8fa3;
-  --text-faint: #5b5f72;
+  --blue: #12293f;         /* base blueprint canvas */
+  --blue-raised: #16324c;  /* panels sit one step lighter */
+  --blue-line: #2a4d6b;    /* hairline rules, borders */
+  --text: #eaf2f8;
+  --text-muted: #8fb0c7;
+  --text-faint: #5c7f97;
 
-  --amber: #f2a65a;       /* signature accent: beams, primary CTA */
-  --amber-dim: #f2a65a33;
+  --amber: #ff8552;        /* signature accent: revision-mark orange */
+  --amber-dim: #ff855233;
 
-  --mod-text: #9fc8e8;    /* pale blue  - text chunks   (Feed Forward) */
-  --mod-table: #a8d8b9;   /* mint green - table chunks  (Softmax/output) */
-  --mod-figure: #f0b27a;  /* peach      - figure chunks (Multi-Head Attn) */
+  --mod-text: #9fc8e8;     /* pale cyan  - text chunks   */
+  --mod-table: #8fd6ae;    /* mint green - table chunks  */
+  --mod-figure: #ff8552;   /* revision orange - figure chunks */
 
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 8px;
+  --radius-md: 4px;
+  --radius-sm: 3px;
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Inter", -apple-system, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-body: "Space Grotesk", ui-sans-serif, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -36,35 +38,50 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--ink);
+  background: var(--blue);
   color: var(--text);
   font-family: var(--font-body);
   min-height: 100vh;
 }
 
-body {
-  overflow-x: hidden;
-}
+body { overflow-x: hidden; }
 
-/* Ambient texture: a faint grain so the flat ink background doesn't feel dead */
-.grain {
+/* Graph-paper texture: the blueprint grid */
+.grid-texture {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.035;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(var(--blue-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blue-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.18;
 }
+
+/* Sheet-frame corner ticks, like a technical drawing's border marks */
+.corner {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.corner-tl { top: 18px; left: 18px; border-top: 1.5px solid var(--text-faint); border-left: 1.5px solid var(--text-faint); }
+.corner-tr { top: 18px; right: 18px; border-top: 1.5px solid var(--text-faint); border-right: 1.5px solid var(--text-faint); }
+.corner-bl { bottom: 18px; left: 18px; border-bottom: 1.5px solid var(--text-faint); border-left: 1.5px solid var(--text-faint); }
+.corner-br { bottom: 18px; right: 18px; border-bottom: 1.5px solid var(--text-faint); border-right: 1.5px solid var(--text-faint); }
 
 /* ---------------------------------------------------------------------
    Layout
    ------------------------------------------------------------------- */
 .stage {
   position: relative;
-  z-index: 1;
-  max-width: 720px;
+  z-index: 2;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 8vh 24px 12vh;
+  padding: 10vh 24px 12vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,86 +90,96 @@ body {
 
 .masthead {
   text-align: center;
-  margin-bottom: 40px;
-  animation: rise 0.7s var(--ease) both;
+  margin-bottom: 44px;
+  animation: rise 0.6s var(--ease) both;
 }
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
   color: var(--text-faint);
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
 
 .title {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(36px, 6vw, 52px);
-  line-height: 1.05;
+  font-weight: 600;
+  font-size: clamp(32px, 5.5vw, 46px);
+  line-height: 1.08;
   margin: 0 0 10px;
   letter-spacing: -0.01em;
 }
 
 .subtitle {
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--text-muted);
   margin: 0;
 }
 
 /* ---------------------------------------------------------------------
-   Query input capsule
+   Query input — a spec-sheet line, not a floating chat capsule
    ------------------------------------------------------------------- */
-.input-capsule {
+.spec-input {
   width: 100%;
-  background: var(--ink-raised);
-  border: 1px solid var(--ink-line);
-  border-radius: var(--radius-lg);
-  padding: 18px 18px 14px;
-  animation: rise 0.7s var(--ease) 0.08s both;
-  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  animation: rise 0.6s var(--ease) 0.06s both;
 }
 
-.input-capsule:focus-within {
-  border-color: #3a3f52;
-  box-shadow: 0 0 0 4px var(--amber-dim);
+.spec-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  border-bottom: 1.5px solid var(--blue-line);
+  padding-bottom: 12px;
+  transition: border-color 0.25s var(--ease);
+}
+.spec-input:focus-within .spec-line {
+  border-color: var(--amber);
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.03em;
+  padding-bottom: 6px;
+  white-space: nowrap;
 }
 
 .query-input {
-  width: 100%;
+  flex: 1;
   background: transparent;
   border: none;
   outline: none;
   resize: none;
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
-  padding: 4px 2px 12px;
-  min-height: 24px;
+  padding: 0 0 2px;
+  min-height: 26px;
   max-height: 200px;
 }
-
 .query-input::placeholder { color: var(--text-faint); }
 
 .image-chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--ink);
-  border: 1px solid var(--ink-line);
+  background: var(--blue-raised);
+  border: 1px solid var(--blue-line);
   border-radius: var(--radius-sm);
   padding: 6px 10px 6px 6px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   animation: chip-in 0.3s var(--ease) both;
 }
+.image-chip[hidden] { display: none; }
 
 .image-chip img {
   width: 28px;
   height: 28px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 .chip-remove {
@@ -163,17 +190,9 @@ body {
   line-height: 1;
   cursor: pointer;
   padding: 2px 4px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
-.chip-remove:hover { color: var(--text); background: var(--ink-line); }
-
-.capsule-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--ink-line);
-  padding-top: 12px;
-}
+.chip-remove:hover { color: var(--text); background: var(--blue-line); }
 
 .icon-btn {
   background: none;
@@ -182,26 +201,29 @@ body {
   cursor: pointer;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--radius-sm);
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  flex-shrink: 0;
+  margin-bottom: 2px;
 }
-.icon-btn:hover { background: var(--ink-line); color: var(--text); }
+.icon-btn:hover { background: var(--blue-line); color: var(--text); }
 
 .ask-btn {
   background: var(--amber);
-  color: #201304;
+  color: #1a0d05;
   border: none;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 14px;
-  padding: 9px 20px;
-  border-radius: 999px;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
   transition: transform 0.15s var(--ease), filter 0.2s var(--ease);
 }
 .ask-btn:hover { filter: brightness(1.08); }
@@ -209,11 +231,11 @@ body {
 .ask-btn:disabled { opacity: 0.6; cursor: default; }
 
 .ask-spinner {
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  border: 2px solid #20130455;
-  border-top-color: #201304;
+  border: 2px solid #1a0d0555;
+  border-top-color: #1a0d05;
   animation: spin 0.7s linear infinite;
 }
 
@@ -222,7 +244,9 @@ body {
    ------------------------------------------------------------------- */
 .answer-zone {
   width: 100%;
-  margin-top: 36px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 .answer-empty {
@@ -239,7 +263,7 @@ body {
   font-family: var(--font-body);
   font-size: 14px;
   text-decoration: underline;
-  text-decoration-color: var(--ink-line);
+  text-decoration-color: var(--blue-line);
   text-underline-offset: 3px;
   cursor: pointer;
   padding: 0;
@@ -247,48 +271,64 @@ body {
 .suggestion:hover { color: var(--amber); text-decoration-color: var(--amber); }
 
 .answer-card {
-  background: var(--ink-raised);
-  border: 1px solid var(--ink-line);
-  border-radius: var(--radius-md);
+  background: var(--blue-raised);
+  border: 1px solid var(--blue-line);
+  border-left: 2px solid var(--amber);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: 24px 26px;
   animation: rise 0.5s var(--ease) both;
 }
 
 .answer-card .asked {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-faint);
   margin: 0 0 14px;
   padding-bottom: 14px;
-  border-bottom: 1px solid var(--ink-line);
+  border-bottom: 1px solid var(--blue-line);
 }
 
 .answer-card .body {
   font-size: 16px;
   line-height: 1.7;
-  white-space: pre-wrap;
 }
+
+.answer-card .body p { margin: 0 0 14px; }
+.answer-card .body p:last-child { margin-bottom: 0; }
+
+.body sub, .source-content sub { font-size: 0.72em; bottom: -0.25em; }
+.body sup, .source-content sup { font-size: 0.72em; top: -0.5em; }
+.body code, .source-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--blue);
+  border: 1px solid var(--blue-line);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.body strong { font-weight: 700; color: var(--text); }
 
 .answer-card .attached-thumb {
   width: 40px;
   height: 40px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 3px;
   vertical-align: middle;
   margin-right: 8px;
-  border: 1px solid var(--ink-line);
+  border: 1px solid var(--blue-line);
 }
 
 .error-card {
-  background: #2a1a1a;
-  border: 1px solid #4a2a2a;
-  border-radius: var(--radius-md);
+  background: #3a2018;
+  border: 1px solid #6b3a2a;
+  border-left: 2px solid #ff8552;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: 18px 22px;
   font-size: 14.5px;
-  color: #f0b0a8;
+  color: #f0c0a8;
   animation: rise 0.4s var(--ease) both;
 }
-.error-card strong { color: #f5c9c2; }
+.error-card strong { color: #ffd8bd; }
 
 /* ---------------------------------------------------------------------
    Sources drawer (the "side pop-up closing bar")
@@ -298,13 +338,13 @@ body {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: var(--ink-raised);
-  border: 1px solid var(--ink-line);
+  background: var(--blue-raised);
+  border: 1px solid var(--blue-line);
   border-right: none;
   border-radius: var(--radius-sm) 0 0 var(--radius-sm);
   color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -314,16 +354,16 @@ body {
   z-index: 20;
   transition: right 0.4s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
 }
-.drawer-tab:hover { color: var(--text); background: var(--ink-line); }
+.drawer-tab:hover { color: var(--text); background: var(--blue-line); }
 .drawer-tab[data-open="true"] { right: 340px; }
 
 .drawer-tab-count {
   font-family: var(--font-mono);
   background: var(--amber-dim);
   color: var(--amber);
-  border-radius: 999px;
+  border-radius: 3px;
   padding: 1px 7px;
-  font-size: 11.5px;
+  font-size: 11px;
 }
 
 .drawer {
@@ -332,8 +372,8 @@ body {
   right: 0;
   height: 100vh;
   width: 340px;
-  background: var(--ink-raised);
-  border-left: 1px solid var(--ink-line);
+  background: var(--blue-raised);
+  border-left: 1px solid var(--blue-line);
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -350,8 +390,8 @@ body {
 }
 .drawer-header h2 {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 19px;
   margin: 0;
 }
 
@@ -363,18 +403,18 @@ body {
   cursor: pointer;
   width: 30px;
   height: 30px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   display: grid;
   place-items: center;
 }
-.drawer-close:hover { color: var(--text); background: var(--ink-line); }
+.drawer-close:hover { color: var(--text); background: var(--blue-line); }
 
 .drawer-hint {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-faint);
   padding: 0 20px 14px;
   margin: 0;
-  border-bottom: 1px solid var(--ink-line);
+  border-bottom: 1px solid var(--blue-line);
 }
 
 .drawer-list {
@@ -387,14 +427,15 @@ body {
 }
 
 .source-card {
-  border: 1px solid var(--ink-line);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--blue-line);
+  border-left: 2px solid var(--card-color, var(--amber));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   padding: 12px 13px;
   cursor: pointer;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
   animation: chip-in 0.35s var(--ease) both;
 }
-.source-card:hover { border-color: var(--card-color, var(--amber)); background: var(--ink); }
+.source-card:hover { background: var(--blue); }
 
 .source-card-head {
   display: flex;
@@ -404,28 +445,29 @@ body {
 }
 
 .modality-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
   flex-shrink: 0;
   background: var(--card-color);
+  transform: rotate(45deg);
 }
 
 .source-ref {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text);
 }
 
 .source-score {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--card-color);
 }
 
 .source-heading {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-muted);
   margin: 0 0 6px;
   line-height: 1.4;
@@ -433,20 +475,22 @@ body {
 
 .source-thumb {
   width: 100%;
-  border-radius: 6px;
-  border: 1px solid var(--ink-line);
+  border-radius: 3px;
+  border: 1px solid var(--blue-line);
   margin-bottom: 8px;
   display: none;
 }
 
 .source-content {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-faint);
   line-height: 1.55;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s var(--ease);
 }
+.source-content p { margin: 0 0 8px; }
+.source-content p:last-child { margin-bottom: 0; }
 
 .source-card[data-expanded="true"] .source-content {
   max-height: 320px;
@@ -455,7 +499,7 @@ body {
 .source-card[data-expanded="true"] .source-thumb { display: block; }
 
 /* ---------------------------------------------------------------------
-   Attention beams (signature element)
+   Attention beams (signature element) — styled like circuit traces
    ------------------------------------------------------------------- */
 .beam-layer {
   position: fixed;
@@ -468,7 +512,7 @@ body {
   fill: none;
   stroke-width: 1.4;
   opacity: 0;
-  stroke-dasharray: 6 3;
+  stroke-dasharray: 5 4;
 }
 .beam-path.animate {
   animation: beam-draw 0.9s var(--ease) forwards, beam-fade 2.6s ease-in 0.9s forwards;
@@ -485,16 +529,12 @@ body {
   from { opacity: 0; transform: scale(0.94); }
   to { opacity: 1; transform: scale(1); }
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 @keyframes beam-draw {
   from { stroke-dashoffset: 240; opacity: 0.85; }
   to { stroke-dashoffset: 0; opacity: 0.85; }
 }
-@keyframes beam-fade {
-  to { opacity: 0; }
-}
+@keyframes beam-fade { to { opacity: 0; } }
 
 /* ---------------------------------------------------------------------
    Accessibility & responsiveness
@@ -512,5 +552,6 @@ body {
   .stage { padding: 6vh 16px 30vh; }
   .drawer { width: 100%; }
   .drawer-tab[data-open="true"] { right: calc(100% - 60px); }
-  .title { font-size: 32px; }
+  .title { font-size: 30px; }
+  .corner { display: none; }
 }

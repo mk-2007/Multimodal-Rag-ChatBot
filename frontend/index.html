@@ -6,36 +6,40 @@
 <title>Ask the paper — Attention Is All You Need</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="grain" aria-hidden="true"></div>
+  <div class="grid-texture" aria-hidden="true"></div>
+  <span class="corner corner-tl" aria-hidden="true"></span>
+  <span class="corner corner-tr" aria-hidden="true"></span>
+  <span class="corner corner-bl" aria-hidden="true"></span>
+  <span class="corner corner-br" aria-hidden="true"></span>
 
   <main class="stage">
     <header class="masthead">
-      <p class="eyebrow">Attention Is All You Need &middot; Vaswani et al., 2017</p>
+      <p class="eyebrow">&#91; ATTENTION IS ALL YOU NEED &middot; VASWANI ET AL., 2017 &#93;</p>
       <h1 class="title">Ask the paper</h1>
       <p class="subtitle">Type a question, or drop in a diagram to see what it matches.</p>
     </header>
 
-    <section class="input-capsule" id="input-capsule">
+    <section class="spec-input" id="input-capsule">
       <div class="image-chip" id="image-chip" hidden>
         <img id="image-preview" alt="Attached image preview">
         <button class="chip-remove" id="image-remove" aria-label="Remove attached image" type="button">&times;</button>
       </div>
 
-      <textarea
-        id="query-text"
-        class="query-input"
-        placeholder="Ask something about the paper, or drop an image"
-        rows="1"
-      ></textarea>
-
-      <div class="capsule-controls">
+      <div class="spec-line">
+        <span class="spec-label">QUERY&nbsp;//</span>
+        <textarea
+          id="query-text"
+          class="query-input"
+          placeholder="Ask something about the paper, or drop an image"
+          rows="1"
+        ></textarea>
         <button class="icon-btn" id="attach-btn" type="button" aria-label="Attach an image" title="Attach an image">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5a2 2 0 0 0-2.83 0L7 16"/><path d="M17 3h5v5"/><path d="M22 3l-9 9"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5a2 2 0 0 0-2.83 0L7 16"/><path d="M17 3h5v5"/><path d="M22 3l-9 9"/></svg>
         </button>
         <input type="file" id="image-input" accept="image/png,image/jpeg" hidden>
         <button class="ask-btn" id="ask-btn" type="button">

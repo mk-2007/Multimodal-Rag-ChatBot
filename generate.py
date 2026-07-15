@@ -28,6 +28,10 @@ rather than guessing.
 - When the context includes a table or figure, feel free to cite it by name (e.g. \
 "Table 2" or "Figure 1") since the user can see the underlying source.
 - Be concise and directly answer the question first, then add supporting detail.
+- When writing mathematical variables with a subscript or superscript, use plain-text \
+underscore/caret notation exactly like this: d_model, d_k, x^2, W_i^Q, N_layers. Do NOT \
+use LaTeX ($...$), unicode subscript/superscript characters, or any other notation --
+the underscore/caret form is rendered specially by the interface, so consistency matters.
 """
 
 
