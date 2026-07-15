@@ -2,32 +2,40 @@
 
 Source document: *Attention Is All You Need* (Vaswani et al., 2017)
 
-**Query image:** `E:\test.png`
+**Query image:** `images\figure_1_page3.png`
+
+**Question asked:** Explain this diagram
 
 **Stage 1 - image described for search:**
 
-> This diagram illustrates the "Multi-Head Attention" mechanism from the Transformer architecture. It depicts the flow of input vectors (V, K, Q) through parallel linear projections and multiple "Scaled Dot-Product Attention" layers, which are then concatenated and passed through a final linear transformation. Labels include "Multi-Head Attention," "Linear," "Concat," and "Scaled Dot-Product Attention," with the parameter $h$ denoting the number of attention heads.
+> This image displays the architecture of the Transformer model, a deep learning neural network composed of an encoder stack on the left and a decoder stack on the right. Key components visible include "Input/Output Embedding" layers, "Positional Encoding," "Multi-Head Attention" blocks, "Feed Forward" layers, and "Add & Norm" operations, with the stacks repeated "Nx" times. The diagram illustrates the data flow from inputs and right-shifted outputs through these layers, ultimately producing "Output Probabilities" via "Linear" and "Softmax" layers.
 
 **Retrieved context (shared vector store, mixed modalities):**
 
-- `[0.846]` **figure** | `figure_3` | page 4 | _Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Atte_
-- `[0.803]` **figure** | `figure_2` | page 4 | _Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Atte_
-- `[0.773]` **text** | `page 2 body text` | page 2 | _3 Model Architecture_
-- `[0.766]` **text** | `page 2 body text` | page 2 | _3 Model Architecture_
-- `[0.753]` **text** | `page 2 body text` | page 2 | _3 Model Architecture_
+- `[0.831]` **figure** | `figure_1` | page 3 | _Figure 1: The Transformer - model architecture._
+- `[0.775]` **text** | `page 2 body text` | page 2 | _3 Model Architecture_
+- `[0.756]` **figure** | `figure_3` | page 4 | _Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Atte_
+- `[0.752]` **figure** | `figure_2` | page 4 | _Figure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Atte_
+- `[0.743]` **text** | `page 2 body text` | page 2 | _3 Model Architecture_
 
 **Grounded answer (dual-grounded: image + retrieved context):**
 
-The provided image illustrates the **Multi-Head Attention** mechanism used in the Transformer architecture.
+This diagram, Figure 1 from the paper, illustrates the Transformer model architecture, which utilizes an encoder-decoder structure to process sequential data without recurrence.
 
-### What the image shows:
-As described in **Context 1**, the diagram represents the structural flow of Multi-Head Attention:
-*   **Inputs:** At the bottom, three distinct inputs—**V** (Values), **K** (Keys), and **Q** (Queries)—are fed into parallel "Linear" layers. These layers apply multiple linear projections to the inputs.
-*   **Attention Heads:** The outputs from these projections pass into a series of stacked blocks labeled **"Scaled Dot-Product Attention."** The bracket labeled **"h"** indicates that the mechanism is divided into $h$ parallel attention heads.
-*   **Output Processing:** The outputs from these parallel heads are combined in a **"Concat"** (concatenation) layer, followed by a final **"Linear"** layer that projects the concatenated output to its final form.
+**Encoder (Left side):**
+*   The encoder consists of a stack of $N$ identical layers.
+*   The input sequence passes through an "Input Embedding" and is combined with "Positional Encoding."
+*   Each encoder layer contains two sub-layers: a "Multi-Head Attention" mechanism and a position-wise fully connected "Feed Forward" network.
+*   As shown by the arrows and boxes, each sub-layer employs a residual connection followed by layer normalization (the "Add & Norm" blocks).
 
-### Relation to the paper:
-This figure, specifically labeled as part of Figure 2 in the paper, is central to the "Multi-Head Attention" section (Section 3.2.2) of the text:
-*   **Joint Representation:** The paper explains that instead of performing a single attention function, it is beneficial to linearly project the queries, keys, and values $h$ times. This allows the model to "jointly attend to information from different representation subspaces at different positions" (**Context 4**).
-*   **Mechanism:** The formula provided in the text, $\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, ..., \text{head}_h)W^O$, directly corresponds to the visual flow of projecting, computing parallel attention heads, concatenating them, and applying a final linear projection ($W^O$) shown at the top of the image (**Context 3**).
-*   **Implementation:** The paper notes that they typically employ $h = 8$ parallel attention layers, each with a reduced dimensionality of $d_k = d_v = d_{model}/h = 64$, ensuring the total computational cost remains similar to single-head attention (**Context 3**).
+**Decoder (Right side):**
+*   The decoder is also a stack of $N$ identical layers.
+*   It takes the "Outputs (shifted right)" as input, which are processed through an "Output Embedding" and "Positional Encoding."
+*   Each decoder layer contains three sub-layers:
+    1.  A "Masked Multi-Head Attention" sub-layer, which prevents positions from attending to subsequent positions.
+    2.  A second "Multi-Head Attention" sub-layer that performs attention over the final output of the encoder stack (indicated by the connection from the encoder to the decoder).
+    3.  A "Feed Forward" network.
+*   Like the encoder, each sub-layer in the decoder is followed by an "Add & Norm" operation.
+
+**Final Output:**
+*   The final output of the decoder stack passes through a "Linear" layer and a "Softmax" layer to generate the "Output Probabilities" for the sequence.

@@ -14,13 +14,9 @@ Source document: *Attention Is All You Need* (Vaswani et al., 2017)
 
 **Grounded answer:**
 
-On the WMT 2014 English-to-German translation task, the **Transformer (big)** model achieved a BLEU score of **28.4**.
+The Transformer (big) model achieved a BLEU score of 28.4 on the WMT 2014 English-to-German translation task.
 
-### Comparison to GNMT + RL:
-* **GNMT + RL (single model):** The Transformer (big) model outperforms the GNMT + RL single model, which achieved a BLEU score of **24.6** (an improvement of 3.8 BLEU points).
-* **GNMT + RL Ensemble:** The Transformer (big) model also outperforms the GNMT + RL Ensemble, which achieved a BLEU score of **26.30** (an improvement of 2.1 BLEU points). 
-
-*(Source: Context 1, Context 2, and Table 2)*
+Compared to GNMT + RL, the Transformer (big) model outperforms it; according to Table 2, the GNMT + RL model achieved a BLEU score of 24.6, while the GNMT + RL Ensemble achieved 26.30. The Transformer (big) model outperforms these previous state-of-the-art models (including ensembles) by more than 2.0 BLEU.
 
 ---
 
@@ -36,26 +32,23 @@ On the WMT 2014 English-to-German translation task, the **Transformer (big)** mo
 
 **Grounded answer:**
 
-Based on the model diagram in **Figure 1** (supported by the text in Section 3), the Transformer architecture consists of an **encoder stack** on the left and a **decoder stack** on the right, connected via an attention mechanism, and culminating in an output stage. 
+The Transformer architecture consists of an encoder stack and a decoder stack, each composed of $N=6$ identical layers (Context 1, Context 2, Context 3).
 
-Here is how the main blocks are structured and connected:
+### Encoder Architecture
+*   **Input Processing:** The process begins with "Inputs" passing through an "Input Embedding" block, to which "Positional Encoding" is added (Context 1).
+*   **Layers:** Each encoder layer consists of two sub-layers: a **Multi-Head Attention** block and a **Feed Forward** network (Context 1, Context 2).
+*   **Connections:** Each sub-layer utilizes a residual connection followed by an "Add & Norm" (layer normalization) operation. The output of each sub-layer is defined as $\text{LayerNorm}(x + \text{Sublayer}(x))$ (Context 1, Context 3).
 
-### 1. The Encoder Stack (Left)
-* **Input and Embedding:** The process begins with **Inputs**, which pass through an **Input Embedding** block. A **Positional Encoding** (represented by a wave symbol) is added to this embedding.
-* **Encoder Layers ($N\times$ repetitions):** This combined signal enters a stack that repeats $N$ times (where $N = 6$). Each layer contains:
-  * **Multi-Head Attention:** The signal branches, with one path splitting into three inputs entering the "Multi-Head Attention" block, and a residual connection bypassing it. Both paths merge at an **Add & Norm** layer.
-  * **Feed Forward:** The output then splits again: one path enters a position-wise **Feed Forward** block, and a residual connection bypasses it. Both paths merge at a second **Add & Norm** layer.
-* The final output of the encoder stack is sent directly to the decoder stack.
+### Decoder Architecture
+*   **Input Processing:** "Outputs (shifted right)" pass through an "Output Embedding" and are added to a "Positional Encoding" (Context 1).
+*   **Layers:** Each decoder layer contains three sub-layers:
+    1.  **Masked Multi-Head Attention:** This prevents positions from attending to subsequent positions to preserve the auto-regressive property (Context 1, Context 3).
+    2.  **Multi-Head Attention:** This sub-layer receives its queries from the previous decoder layer and its keys and values from the final output of the encoder stack (Context 1, Context 5).
+    3.  **Feed Forward:** A position-wise fully connected network (Context 1, Context 4).
+*   **Connections:** Similar to the encoder, each sub-layer is followed by a residual connection and an "Add & Norm" layer (Context 1, Context 3).
 
-### 2. The Decoder Stack (Right)
-* **Output and Embedding:** The target sequence, **Outputs (shifted right)**, passes through an **Output Embedding** block and has a **Positional Encoding** added to it.
-* **Decoder Layers ($N\times$ repetitions):** This signal enters a stack that also repeats $N$ times (where $N = 6$). Each layer consists of three sub-layers:
-  * **Masked Multi-Head Attention:** To prevent positions from attending to subsequent positions, the signal first passes through a "Masked Multi-Head Attention" block and an **Add & Norm** layer (utilizing a residual bypass).
-  * **Encoder-Decoder Multi-Head Attention:** The signal then enters a second "Multi-Head Attention" block. This block acts as the connection point between the encoder and decoder: it receives **two inputs** (keys and values) directly from the final output of the encoder stack, and its **third input** (queries) from the decoder's preceding "Add & Norm" layer. This is followed by another **Add & Norm** layer with a residual connection.
-  * **Feed Forward:** The signal then passes through a **Feed Forward** block, paired with a final residual bypass and an **Add & Norm** layer.
-
-### 3. The Output Stage
-* At the very top, the final output of the decoder stack passes through a **Linear** layer followed by a **Softmax** layer to generate the final **Output Probabilities**.
+### Final Output
+The final output of the decoder stack passes through a **Linear** layer followed by a **Softmax** layer to produce "Output Probabilities" (Context 1). All sub-layers and embedding layers produce outputs of dimension $d_{model} = 512$ (Context 3).
 
 ---
 
@@ -71,12 +64,13 @@ Here is how the main blocks are structured and connected:
 
 **Grounded answer:**
 
-Based on the provided context, **multi-head attention** is an attention mechanism where, instead of performing a single attention function with $d_{\text{model}}$-dimensional queries, keys, and values, the model:
-1. Linearly projects the queries, keys, and values $h$ times using different, learned linear projections to $d_k$, $d_k$, and $d_v$ dimensions, respectively (Context 2).
-2. Performs the attention function in parallel across these projected versions (yielding $d_v$-dimensional outputs) (Context 2).
-3. Concatenates these outputs and projects them once more to produce the final values (Context 2, Figure 2).
+Multi-head attention is a mechanism where queries, keys, and values are linearly projected $h$ times with different, learned linear projections into $d_k$, $d_k$, and $d_v$ dimensions. The attention function is then performed on these projected versions in parallel, after which the resulting outputs are concatenated and projected again to produce final values.
 
-**Why it is used instead of a single attention function:**
-It is used because it allows the model to **jointly attend to information from different representation subspaces at different positions** (Context 1, Context 2). If a single attention head were used instead, averaging would inhibit this capability (Context 1, Context 2).
+It is used instead of a single attention function because:
+* **Joint Representation:** It allows the model to jointly attend to information from different representation subspaces at different positions. 
+* **Avoiding Averaging:** With a single attention head, averaging inhibits the model's ability to attend to information from different subspaces.
+* **Interpretability:** Individual attention heads can learn to perform different tasks and exhibit behavior related to the syntactic and semantic structure of sentences.
+
+The total computational cost of this approach remains similar to that of single-head attention with full dimensionality because the dimension of each head is reduced.
 
 ---
